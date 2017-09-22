@@ -21,6 +21,20 @@ module.exports = (robot) ->
           title_link: getMessagePermalink res.message
         }]
       }
+
+      # send a parent message in the channel when having a thread message.
+      # if res.message.thread_ts?
+      #   request = require 'request'
+      #   data = {
+      #     form: {
+      #       token: process.env.HUBOT_SLACK_TOKEN,
+      #       channel: res.message.room,
+      #       thread_ts: res.message.thread_ts
+      #     }
+      #   }
+      #   request.post 'https://slack.com/api/groups.replies', data, (err, res, body) ->
+      #     robot.adapter.client.web.chat.postMessage(receive_channel.name, body, options)
+      # else
       message = res.message.text.replace "##{res.match[1]}", ""
       robot.adapter.client.web.chat.postMessage(hashtag_channel.name, message, options)
 
